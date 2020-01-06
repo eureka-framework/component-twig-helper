@@ -1,0 +1,26 @@
+{
+  "name": "eureka/component-twig-helper",
+  "description": "Twig helper for Eureka Framework integration",
+  "type": "library",
+  "license": "MIT",
+
+  "authors": [
+    {
+      "name": "Romain Cottard",
+      "role": "Developer"
+    }
+
+  ],
+
+  "autoload": {
+    "psr-4": {
+      "Eureka\\Component\\TwigHelper\\": "./src/"
+    }
+  },
+
+  "require": {
+    "symfony/routing": "^4.3.0",
+    "twig/twig": "^2.12.0"
+  }
+
+}
