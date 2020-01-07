@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * Copyright (c) Romain Cottard
@@ -67,38 +69,44 @@ class TwigMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $this->configurePaths($this->twigPaths);
-        $this->configureFunctions($this->router);
+        $this->configurePaths();
+        $this->configureFunctions();
+        $this->configureExtensions();
 
         return $handler->handle($request);
     }
 
     /**
-     * @param array $paths
      * @return void
      * @throws Twig\Error\LoaderError
      */
-    private function configurePaths(array $paths): void
+    protected function configurePaths(): void
     {
         //~ Add path
         $loader = $this->twig->getLoader();
         if ($loader instanceof Twig\Loader\FilesystemLoader) {
-            foreach ($paths as $path => $namespace) {
+            foreach ($this->twigPaths as $path => $namespace) {
                 $loader->addPath($path, $namespace);
             }
         }
     }
 
     /**
-     * @param Router $router
      * @return void
      */
-    private function configureFunctions(Router $router): void
+    protected function configureFunctions(): void
     {
         //~ Add functions to main twig instance
-        $helper = new TwigHelper($router, $this->webAssetsPath);
+        $helper = new TwigHelper($this->router, $this->webAssetsPath);
         foreach ($helper->getCallbackFunctions() as $name => $callback) {
             $this->twig->addFunction(new Twig\TwigFunction($name, $callback));
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected function configureExtensions(): void
+    {
     }
 }

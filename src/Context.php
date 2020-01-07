@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * Copyright (c) Romain Cottard
@@ -16,10 +18,10 @@ namespace Eureka\Component\TwigHelper;
  */
 class Context implements \Iterator
 {
-    /** @var integer $length Length of the collection */
+    /** @var int $length Length of the collection */
     protected $length = 0;
 
-    /** @var integer Current position of the cursor in collection. */
+    /** @var int Current position of the cursor in collection. */
     protected $index = 0;
 
     /** @var array $indices Index of keys */
